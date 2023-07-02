@@ -1,5 +1,6 @@
 package ru.yandex.practicum;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -36,6 +37,7 @@ public class LoginTest {
         courierClient.create(courier);
         courierForAuth = generator.getCourierForAuth(courier);
     }
+
     @After
     public void deleteCourier() {
         if (courier != null) {
@@ -44,6 +46,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Корректная акторизация")
     public void courierCorrectLogin() {
         log.info(COURIER_AUTHORIZATION, courierForAuth);
         Response response = courierClient.login(courierForAuth);
@@ -55,6 +58,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Авторизация без поля login")
     public void courierWithoutLogin() {
         CourierForAuthWithoutLogin courierForAuthWithoutLogin = generator.getCourierForAuthWithoutLogin(courier);
         log.info(COURIER_AUTHORIZATION, courierForAuthWithoutLogin);
@@ -67,6 +71,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Авторизация без поля password")
     public void courierWithoutPassword() {
         CourierForAuthWithoutPassword courierForAuthWithoutPassword = generator.getCourierForAuthWithoutPassword(courier);
         log.info(COURIER_AUTHORIZATION, courierForAuthWithoutPassword);
@@ -79,6 +84,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Авторизация с login = null")
     public void courierWithLoginNull() {
         CourierForAuth courierForAuthWithLoginNull = generator.getCourierForAuthWithLoginNull(courier);
         log.info(COURIER_AUTHORIZATION, courierForAuthWithLoginNull);
@@ -91,6 +97,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Авторизация с password = null")
     public void courierWithPasswordNull() {
         CourierForAuth courierForAuthWithPasswordNull = generator.getCourierForAuthWithPasswordNull(courier);
         log.info(COURIER_AUTHORIZATION, courierForAuthWithPasswordNull);
@@ -103,6 +110,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Авторизация с нсуществующей парой логин/пароль")
     public void courierNonExistent() {
         Courier courierNotCreate = generator.getCourier();
         CourierForAuth courierForAuthNotCreate = generator.getCourierForAuth(courierNotCreate);

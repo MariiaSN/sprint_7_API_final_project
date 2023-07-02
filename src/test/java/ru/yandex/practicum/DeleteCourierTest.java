@@ -1,20 +1,15 @@
 package ru.yandex.practicum;
 
-import io.restassured.RestAssured;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.junit.Before;
 import org.junit.Test;
 import ru.yandex.practicum.client.courier.CourierClient;
 import ru.yandex.practicum.model.courier.Courier;
-import ru.yandex.practicum.model.courier.courierForAuth.CourierForAuth;
 import ru.yandex.practicum.service.CourierGenerator;
 
-import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
-
-//TODO допзадание, дописать
 
 @Slf4j
 public class DeleteCourierTest {
@@ -28,6 +23,7 @@ public class DeleteCourierTest {
     private Integer id = 0;
 
     @Test
+    @DisplayName("Удаление курьера")
     public void deleteCourier() {
         Courier courier = generator.getCourier();
         courierClient.create(courier);
@@ -43,6 +39,7 @@ public class DeleteCourierTest {
     }
 
     @Test
+    @DisplayName("Удаление курьера по несуществующему id")
     public void deleteNonExistent() {
         id = Integer.MIN_VALUE;
         log.info(DELETE, id);

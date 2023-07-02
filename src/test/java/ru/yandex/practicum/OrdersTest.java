@@ -1,5 +1,6 @@
 package ru.yandex.practicum;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -15,6 +16,7 @@ public class OrdersTest {
     OrderClient orderClient = new OrderClient();
 
     @Test
+    @DisplayName("Получение списка заказов")
     public void getOrders() {
         Response response = orderClient.getOrders();
         log.info(RESPONSE, response.body().asString());

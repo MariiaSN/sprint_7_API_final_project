@@ -4,6 +4,7 @@ import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import ru.yandex.practicum.client.courier.CourierClient;
+import ru.yandex.practicum.client.order.OrderClient;
 import ru.yandex.practicum.model.courier.Courier;
 import ru.yandex.practicum.model.courier.courierForAuth.CourierForAuth;
 import ru.yandex.practicum.service.CourierGenerator;
@@ -16,6 +17,7 @@ public class UtillMetods {
     private static final String FIELD_OK = "ok";
     private static final String RESPONSE = "Получен ответ от сервера: {}";
     private final CourierClient courierClient = new CourierClient();
+    private final OrderClient orderClient = new OrderClient();
     private final CourierGenerator generator = new CourierGenerator();
 
     public Integer getCourierId(Courier courier) {
@@ -39,5 +41,13 @@ public class UtillMetods {
         response.then().assertThat().body(FIELD_OK, equalTo(true))
                 .and().statusCode(HttpStatus.SC_OK);
         log.info("Удаление курьера с id = {} произошло корректно\n", courierId);
+    }
+
+    public void cancelOrder(Integer id) {
+        Response response = orderClient.cancelOrder(id);
+
+        response.then().assertThat().body(FIELD_OK, equalTo(true))
+                .and().statusCode(HttpStatus.SC_OK);
+        log.info("Заказ {} завершен\n", id);
     }
 }

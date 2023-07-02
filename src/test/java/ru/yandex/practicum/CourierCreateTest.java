@@ -1,5 +1,6 @@
 package ru.yandex.practicum;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -34,6 +35,7 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Создание курьера с параметрами логин, пароль, имя")
     public void createCourier() {
         courier = generator.getCourier();
         log.info(CREATE_COURIER, courier.getLogin());
@@ -46,6 +48,7 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Создание курьера с существующим логином")
     public void createCourierWithExistingLogin() {
         courier = generator.getCourier();
         log.info(CREATE_COURIER, courier.getLogin());
@@ -61,6 +64,7 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Создание курьера без поля name")
     public void createCourierWithoutName() {
         courier = generator.getCourier();
         log.info(CREATE_COURIER, courier);
@@ -69,10 +73,11 @@ public class CourierCreateTest {
         log.info(RESPONSE + "\n", response.body().asString());
 
         response.then().statusCode(HttpStatus.SC_CREATED)
-                        .and().body(FIELD_OK, equalTo(true));
+                .and().body(FIELD_OK, equalTo(true));
     }
 
     @Test
+    @DisplayName("Создание курьера без поля password")
     public void createCourierWithoutPassword() {
         CourierWithoutPassword courierWithoutPassword = generator.getCourierWithoutPassword();
         log.info(CREATE_COURIER, courierWithoutPassword);
@@ -85,6 +90,7 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Создание курьера с password = null")
     public void createCourierWithPasswordNull() {
         Courier courier = generator.getCourierWithPasswordNull();
         log.info(CREATE_COURIER, courier);
@@ -97,6 +103,7 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Создание курьера без поля login")
     public void createCourierWithoutLogin() {
         CourierWithoutLogin courierWithoutLogin = generator.getCourierWithoutLogin();
         log.info(CREATE_COURIER, courierWithoutLogin);
@@ -109,6 +116,7 @@ public class CourierCreateTest {
     }
 
     @Test
+    @DisplayName("Создание курьера с login = null")
     public void createCourierWithLoginNull() {
         Courier courier = generator.getCourierWithLoginNull();
         log.info(CREATE_COURIER, courier);

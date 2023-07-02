@@ -1,5 +1,6 @@
 package ru.yandex.practicum;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -11,7 +12,6 @@ import ru.yandex.practicum.client.order.OrderClient;
 import ru.yandex.practicum.model.order.Order;
 import ru.yandex.practicum.service.OrderGenerator;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static ru.yandex.practicum.constant.ScooterColorUtils.COLOR_BLACK;
 import static ru.yandex.practicum.constant.ScooterColorUtils.COLOR_GREY;
@@ -21,7 +21,6 @@ import static ru.yandex.practicum.constant.ScooterColorUtils.COLOR_GREY;
 public class OrderCreateTest {
     private static final String RESPONSE = "Получен ответ от сервера: {}";
     public static final String FIELD_TRACK = "track";
-    public static final String FIELD_OK = "ok";
     private final String firstName;
     private final String lastName;
     private final String address;
@@ -31,8 +30,9 @@ public class OrderCreateTest {
     private final String deliveryDate;
     private final String comment;
     private final String[] color;
-    OrderClient orderClient = new OrderClient();
-    OrderGenerator generator = new OrderGenerator();
+    private final OrderClient orderClient = new OrderClient();
+    private final OrderGenerator generator = new OrderGenerator();
+    private final UtillMetods util = new UtillMetods();
     private Integer idOrder;
 
     public OrderCreateTest(String firstName, String lastName, String address, String metroStation, String phone,
@@ -50,23 +50,24 @@ public class OrderCreateTest {
 
     @Parameterized.Parameters
     public static Object[][] getParameters() {
-        return new Object[][] {
-                {"Имя Один", "Фамилия", "Адрес 1", "Красные ворота", "79991111111", 1, "2023-07-17", "comments one", new String[] {COLOR_BLACK} },
-                {"Имя Два", "Фамилия", "Адрес 2", "Чистые пруды", "79992222222", 2, "2023-07-17", "comments two", new String[] {COLOR_GREY} },
-                {"Имя Три", "Фамилия", "Адрес 3", "Охотный ряд", "79993333333", 3, "2023-07-17", "comments three", new String[] {COLOR_BLACK, COLOR_GREY} },
-                {"Имя Четыре", "Фамилия", "Адрес 4", "Соколиная гора", "79994444444", 4, "2023-07-17", "comments four", new String[] {} },
-                {"Имя Пять", "Фамилия", "Адрес 5", "Красные ворота", "79995555555", 5, "2023-07-17", "comments five", null }
+        return new Object[][]{
+                {"Имя Один", "Фамилия", "Адрес 1", "Красные ворота", "79991111111", 1, "2023-07-17", "comments one", new String[]{COLOR_BLACK}},
+                {"Имя Два", "Фамилия", "Адрес 2", "Чистые пруды", "79992222222", 2, "2023-07-17", "comments two", new String[]{COLOR_GREY}},
+                {"Имя Три", "Фамилия", "Адрес 3", "Охотный ряд", "79993333333", 3, "2023-07-17", "comments three", new String[]{COLOR_BLACK, COLOR_GREY}},
+                {"Имя Четыре", "Фамилия", "Адрес 4", "Соколиная гора", "79994444444", 4, "2023-07-17", "comments four", new String[]{}},
+                {"Имя Пять", "Фамилия", "Адрес 5", "Красные ворота", "79995555555", 5, "2023-07-17", "comments five", null}
         };
     }
 
     @After
     public void delete() {
         if (idOrder != null && idOrder > 0) {
-            cancelOrder(idOrder);
+            util.cancelOrder(idOrder);
         }
     }
 
     @Test
+    @DisplayName("Create order")
     public void createOrder() {
         Order order = generator.getOrder(firstName, lastName, address, metroStation, phone,
                 rentTime, deliveryDate, comment, color);
@@ -81,13 +82,4 @@ public class OrderCreateTest {
         response.then().statusCode(HttpStatus.SC_CREATED)
                 .and().assertThat().body(FIELD_TRACK, notNullValue());
     }
-
-    private void cancelOrder(Integer id) {
-        Response response = orderClient.cancelOrder(id);
-
-        response.then().assertThat().body(FIELD_OK, equalTo(true))
-                .and().statusCode(HttpStatus.SC_OK);
-        log.info("Заказ {} завершен\n", id);
-    }
-
 }

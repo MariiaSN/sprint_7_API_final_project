@@ -1,4 +1,5 @@
 package ru.yandex.practicum.service;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import ru.yandex.practicum.model.courier.Courier;
 import ru.yandex.practicum.model.courier.CourierWithoutLogin;

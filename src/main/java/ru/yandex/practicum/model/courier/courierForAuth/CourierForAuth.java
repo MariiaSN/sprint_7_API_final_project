@@ -1,7 +1,6 @@
 package ru.yandex.practicum.model.courier.courierForAuth;
 
 import lombok.*;
-import ru.yandex.practicum.model.courier.Courier;
 
 @Getter
 @Setter

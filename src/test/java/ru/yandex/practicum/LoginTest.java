@@ -4,6 +4,7 @@ import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
+import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,8 @@ import ru.yandex.practicum.model.courier.courierForAuth.CourierForAuthWithoutLog
 import ru.yandex.practicum.model.courier.courierForAuth.CourierForAuthWithoutPassword;
 import ru.yandex.practicum.service.CourierGenerator;
 
-import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.junit.Assert.assertTrue;
 
 @Slf4j
@@ -46,15 +48,14 @@ public class LoginTest {
     }
 
     @Test
-    @DisplayName("Корректная акторизация")
+    @DisplayName("Корректная авторизация")
     public void courierCorrectLogin() {
         log.info(COURIER_AUTHORIZATION, courierForAuth);
         Response response = courierClient.login(courierForAuth);
-
         log.info(RESPONSE + "\n", response.body().asString());
-        Integer id = response.body().path(FIELD_ID);
-        response.then().statusCode(HttpStatus.SC_OK);
-        assertTrue(id > 0);
+
+        response.then().statusCode(HttpStatus.SC_OK)
+                        .and().assertThat().body(FIELD_ID, allOf(notNullValue(), greaterThan(0)));
     }
 
     @Test

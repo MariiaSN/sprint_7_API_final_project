@@ -1,5 +1,6 @@
 package ru.yandex.practicum.client;
 
+import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 

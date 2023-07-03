@@ -43,8 +43,8 @@ public class CourierCreateTest {
         Response response = courierClient.create(courier);
         log.info(RESPONSE + "\n", response.body().asString());
 
-        response.then().assertThat().body(FIELD_OK, equalTo(true))
-                .and().statusCode(HttpStatus.SC_CREATED);
+        response.then().assertThat().statusCode(HttpStatus.SC_CREATED)
+                .and().body(FIELD_OK, equalTo(true));
     }
 
     @Test
@@ -56,10 +56,10 @@ public class CourierCreateTest {
         Response response = courierClient.create(courier);
         log.info(RESPONSE, response.body().asString());
         log.info("Повторное создание курьера с логином {}", courier.getLogin());
-        Response response2 = courierClient.create(courier);
-        log.info(RESPONSE + "\n", response2.body().asString());
+        Response conflictResponse = courierClient.create(courier);
+        log.info(RESPONSE + "\n", conflictResponse.body().asString());
 
-        response2.then().statusCode(HttpStatus.SC_CONFLICT)
+        conflictResponse.then().statusCode(HttpStatus.SC_CONFLICT)
                 .and().body(FIELD_MESSAGE, equalTo(MESSAGE_EXISTING_LOGIN));
     }
 

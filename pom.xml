@@ -72,6 +72,12 @@
             <version>3.12.0</version>
         </dependency>
 
+        <!-- зависимость для генератора тестовых данных JavaFaker -->
+        <dependency>
+            <groupId>com.github.javafaker</groupId>
+            <artifactId>javafaker</artifactId>
+            <version>0.15</version>
+        </dependency>
 
     </dependencies>
 

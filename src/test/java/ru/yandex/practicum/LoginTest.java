@@ -17,10 +17,9 @@ import ru.yandex.practicum.service.CourierGenerator;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.greaterThan;
-import static org.junit.Assert.assertTrue;
 
 @Slf4j
-public class LoginTest {
+public class LoginTest extends BaseTest {
     private static final String FIELD_MESSAGE = "message";
     public static final String FIELD_ID = "id";
     private static final String RESPONSE = "Получен ответ от сервера: {}";
@@ -29,8 +28,6 @@ public class LoginTest {
     public static final String MESSAGE_COURIER_NOT_FOUND = "Учетная запись не найдена";
     private final CourierGenerator generator = new CourierGenerator();
     private final CourierClient courierClient = new CourierClient();
-    private final UtillMetods util = new UtillMetods();
-    private Courier courier;
     private CourierForAuth courierForAuth;
 
     @Before
@@ -38,13 +35,6 @@ public class LoginTest {
         courier = generator.getCourier();
         courierClient.create(courier);
         courierForAuth = generator.getCourierForAuth(courier);
-    }
-
-    @After
-    public void deleteCourier() {
-        if (courier != null) {
-            util.deleteCourier(courier);
-        }
     }
 
     @Test

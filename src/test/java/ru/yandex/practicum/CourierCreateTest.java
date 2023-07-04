@@ -15,7 +15,7 @@ import ru.yandex.practicum.service.CourierGenerator;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 @Slf4j
-public class CourierCreateTest {
+public class CourierCreateTest extends BaseTest {
     private static final String FIELD_MESSAGE = "message";
     private static final String FIELD_OK = "ok";
     private static final String MESSAGE_EXISTING_LOGIN = "Этот логин уже используется. Попробуйте другой.";
@@ -24,15 +24,6 @@ public class CourierCreateTest {
     private static final String CREATE_COURIER = "Создание курьера: {}";
     private final CourierGenerator generator = new CourierGenerator();
     private final CourierClient courierClient = new CourierClient();
-    private final UtillMetods util = new UtillMetods();
-    private Courier courier;
-
-    @After
-    public void deleteCourier() {
-        if (courier != null) {
-            util.deleteCourier(courier);
-        }
-    }
 
     @Test
     @DisplayName("Создание курьера с параметрами логин, пароль, имя")

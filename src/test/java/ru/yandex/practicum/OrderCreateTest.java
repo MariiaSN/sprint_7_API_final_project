@@ -32,8 +32,8 @@ public class OrderCreateTest {
     private final String[] color;
     private final OrderClient orderClient = new OrderClient();
     private final OrderGenerator generator = new OrderGenerator();
-    private final UtillMetods util = new UtillMetods();
-    private Integer idOrder;
+    private final UtilMethods util = new UtilMethods();
+    private Integer trackId;
 
     public OrderCreateTest(String firstName, String lastName, String address, String metroStation, String phone,
                            Integer rentTime, String deliveryDate, String comment, String[] color) {
@@ -61,8 +61,8 @@ public class OrderCreateTest {
 
     @After
     public void delete() {
-        if (idOrder != null && idOrder > 0) {
-            util.cancelOrder(idOrder);
+        if (trackId != null && trackId > 0) {
+            util.cancelOrder(trackId);
         }
     }
 
@@ -76,8 +76,8 @@ public class OrderCreateTest {
         Response response = orderClient.createOrder(order);
         log.info(RESPONSE, response.body().asString());
 
-        idOrder = response.body().path(FIELD_TRACK);
-        log.info("Создан заказ №: {}\n", idOrder);
+        trackId = response.body().path(FIELD_TRACK);
+        log.info("Создан заказ №: {}\n", trackId);
 
         response.then().statusCode(HttpStatus.SC_CREATED)
                 .and().assertThat().body(FIELD_TRACK, notNullValue());

@@ -12,7 +12,7 @@ import ru.yandex.practicum.service.CourierGenerator;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 @Slf4j
-public class UtillMetods {
+public class UtilMethods {
     public static final String FIELD_ID = "id";
     private static final String FIELD_OK = "ok";
     private static final String RESPONSE = "Получен ответ от сервера: {}";

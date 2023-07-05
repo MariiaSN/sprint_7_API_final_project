@@ -5,7 +5,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = "deliveryDate")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

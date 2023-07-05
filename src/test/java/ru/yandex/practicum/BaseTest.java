@@ -5,7 +5,7 @@ import ru.yandex.practicum.model.courier.Courier;
 
 public class BaseTest {
     protected Courier courier;
-    private final UtillMetods util = new UtillMetods();
+    private final UtilMethods util = new UtilMethods();
 
     @After
     public void deleteCourier() {

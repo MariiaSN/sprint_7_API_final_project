@@ -1,17 +1,23 @@
 Проект тестирования API приложения Яндекс Самокат для заказа самоката.
 
 Стек технологий:
-Java 11, Maven, Allure
+Java 11, Maven, Allure 
 
-Для корректного форминрования отчета Allure рекомендуется запускать программу командой:
+Запуск программы с формированием отчета Allure:
 
 ``` shell
+mvn clean test
 mvn allure:serve
 ```
 
 Для запуска программы можно использовать команду
 
 ``` shell
-cd d:/java/automatic/sprint_7/final_project/sprint_7
 mvn clean test
+```
+
+Для корректного формирования отчета Allure pекомендуется запускать программу командой:
+
+``` shell
+mvn allure:serve
 ```

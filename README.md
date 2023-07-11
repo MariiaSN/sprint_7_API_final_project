@@ -27,7 +27,7 @@ mvn allure:serve
 
 # Техническое задание.
 
-## Документация: qa-scooter.praktikum-services.ru/docs/
+## Документация API: [qa-scooter.praktikum-services.ru/docs/](Сервис заказа самоката Яндекс Самокат)
 
 ### Протестируй ручки.
 
